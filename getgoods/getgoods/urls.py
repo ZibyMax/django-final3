@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.reverse import reverse
 from rest_framework.routers import DefaultRouter
 
 from app.views import APICategoryViewSet, APIParameterViewSet, APIProductViewSet, APIProductParameterViewSet, \
@@ -40,3 +41,6 @@ urlpatterns = [
     path('order/', OrderView.as_view(), name='order'),
     path('store-order/', StoreOrderView.as_view()),
 ]
+
+url=reverse('api:category')
+print(url)
