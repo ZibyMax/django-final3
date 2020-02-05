@@ -30,17 +30,14 @@ router.register('productparameter', APIProductParameterViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
-    path('admin-getgoods/user/', RegisterUserView.as_view()),
-    path('admin-getgoods/recover/', RecoverUserView.as_view()),
-    path('admin-getgoods/reset/', ResetUserView.as_view()),
-    path('admin-getgoods/store/', RegisterStoreView.as_view()),
-    path('price/', PriceView.as_view()),
-    path('price/<int:store_id>', PriceView.as_view()),
-    path('store-price/', StorePriceView.as_view()),
+    path('api/', include((router.urls, 'app'))),
+    path('admin-getgoods/user/', RegisterUserView.as_view(), name='admin-user'),
+    path('admin-getgoods/recover/', RecoverUserView.as_view(), name='admin-recover'),
+    path('admin-getgoods/reset/', ResetUserView.as_view(), name='admin-reset'),
+    path('admin-getgoods/store/', RegisterStoreView.as_view(), name='admin-store'),
+    path('price/', PriceView.as_view(), name='price'),
+    path('price/<int:store_id>', PriceView.as_view(), name='price'),
+    path('store-price/', StorePriceView.as_view(), name='store-price'),
     path('order/', OrderView.as_view(), name='order'),
-    path('store-order/', StoreOrderView.as_view()),
+    path('store-order/', StoreOrderView.as_view(), name='store-order'),
 ]
-
-url=reverse('api:category')
-print(url)
