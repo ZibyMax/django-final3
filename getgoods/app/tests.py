@@ -1,13 +1,9 @@
-from django.test import TestCase
+from django.urls import reverse
 from rest_framework.test import APITestCase, APIClient
 
-# Create your tests here.
 
+class TestCategory(APITestCase):
 
-class TestOneEqualOne(TestCase):
-
-    def test_11(self):
-        self.assertEqual(1, 1)
-
-    def test_12(self):
-        self.assertEqual(1, 2)
+    def test_create_category(self):
+        url = reverse('order')
+        print(url)
