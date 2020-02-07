@@ -211,3 +211,15 @@ class StoreOrderView(APIView):
         return Response(serializer.data)
 
 
+class TestView(APIView):
+    permission_classes = (AllowAny, )
+
+    def get(self, request):
+        answer = {'answer': 'test passed!!!'}
+        return Response(answer, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        if 'question'in request.data:
+            answer = request.data['question'] + 'YES'
+            return Response({'answer': answer}, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
