@@ -52,7 +52,7 @@ class RegisterUserView(APIView):
     permission_classes = (AllowAny, )
 
     def post(self, request):
-        data = request.data
+        data = request.data.copy()
         if 'email' in data:
             data['username'] = data['email']
         serializer = UserSerializer(data=data)

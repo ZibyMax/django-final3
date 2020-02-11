@@ -1,3 +1,4 @@
+from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase, APIClient, APIRequestFactory
 from rest_framework.utils import json
@@ -5,14 +6,20 @@ from rest_framework.utils import json
 
 class TestUser(APITestCase):
 
+    def setUp(self):
+        self.email = 'test@test.test'
+        self.password = 'test'
+
     def test_can_create_user(self):
         url = reverse('admin-user')
-        data = {'email': 'test@test.test'}
-        data1 = {'question': 'b'}
+        data = {'email': self.email,
+                'password': self.password}
         response = self.client.post(url, data)
-        print('----------------1-----------------')
-        response = self.client.post(url, {'question': 'b'})
-        print(response.status_code)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        self.client.login(username=self.email, password=self.password)
+        response = self.client.post(reverse('admin-recover'), {})
+        print(response.data['error'])
 
 
 #
