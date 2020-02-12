@@ -7,13 +7,13 @@ from rest_framework.utils import json
 class TestUser(APITestCase):
 
     def setUp(self):
-        pass
+        self.email = 'test@test.test'
+        self.password = 'testpassword1'
 
     def test_user(self):
         # Создание нового пользователя
         response = self.client.post(reverse('admin-user'),
-                                    {'email': 'test@test.test',
-                                     'password': 'testpassword1'})
+                                    {'email': self.email, 'password': self.password})
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -21,12 +21,21 @@ class TestUser(APITestCase):
         self.client.login(username=self.email, password=self.password)
 
         # Восстановление пароля пользователя
+        response = self.client.post(reverse('admin-recover'), {'email': self.email})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.password = response.data['password']
 
-        response = self.client.post(reverse('admin-recover'), {})
-        print(response.data['error'])
+        # Повторная авторизация пользователя
+        self.client.login(username=self.email, password=self.password)
+
+        # Восставление пароля
 
 
-#
+
+
+
+
+
 # class TestCategory(APITestCase):
 #
 #     # def test_create_category(self):
