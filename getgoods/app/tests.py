@@ -7,17 +7,21 @@ from rest_framework.utils import json
 class TestUser(APITestCase):
 
     def setUp(self):
-        self.email = 'test@test.test'
-        self.password = 'test'
+        pass
 
-    def test_can_create_user(self):
-        url = reverse('admin-user')
-        data = {'email': self.email,
-                'password': self.password}
-        response = self.client.post(url, data)
+    def test_user(self):
+        # Создание нового пользователя
+        response = self.client.post(reverse('admin-user'),
+                                    {'email': 'test@test.test',
+                                     'password': 'testpassword1'})
+
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+        # Авторизация пользователя
         self.client.login(username=self.email, password=self.password)
+
+        # Восстановление пароля пользователя
+
         response = self.client.post(reverse('admin-recover'), {})
         print(response.data['error'])
 
